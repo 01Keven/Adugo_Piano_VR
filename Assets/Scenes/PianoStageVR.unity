@@ -285,6 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756192408}
   - component: {fileID: 756192407}
+  - component: {fileID: 756192410}
   - component: {fileID: 756192409}
   m_Layer: 0
   m_Name: XR Interaction Manager
@@ -1713,6 +1714,7 @@ MonoBehaviour:
   - {fileID: 1000004}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: 2d00026202bafd147a1b77c8ced91d85, type: 3}
+  note: 0
 --- !u!114 &1000105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,6 +1733,7 @@ MonoBehaviour:
   - {fileID: 1000104}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: c85750fc13722fc40877add4ebddf4f3, type: 3}
+  note: 1
 --- !u!114 &1000205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +1752,7 @@ MonoBehaviour:
   - {fileID: 1000204}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: 836f7affc61fcc743957208b5ec6d034, type: 3}
+  note: 2
 --- !u!114 &1000305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,6 +1771,7 @@ MonoBehaviour:
   - {fileID: 1000304}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: bc7809f9f0e55c3448ea1b1af0809a2a, type: 3}
+  note: 3
 --- !u!114 &1000405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1785,6 +1790,7 @@ MonoBehaviour:
   - {fileID: 1000404}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: 9079b07942c2e4e4ba1b74f2f13a43b7, type: 3}
+  note: 4
 --- !u!114 &1000505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1809,7 @@ MonoBehaviour:
   - {fileID: 1000504}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: 3fcc0f2ba7f971145b6d576aa580f3d2, type: 3}
+  note: 5
 --- !u!114 &1000605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1821,6 +1828,7 @@ MonoBehaviour:
   - {fileID: 1000604}
   m_SelectMode: 0
   noteClip: {fileID: 8300000, guid: 3de084af9f97c2d47a4885356f5fdeaf, type: 3}
+  note: 6
 --- !u!1001 &1938023468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1896,6 +1904,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRig: {fileID: 900001}
+--- !u!114 &756192410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756192406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba83d4cd1f904c6481f0ae557909c2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  song: {fileID: 11400000, guid: 4bd526da46974427957d2b4d9445426e, type: 2}
+  keys:
+  - {fileID: 1000005}
+  - {fileID: 1000105}
+  - {fileID: 1000205}
+  - {fileID: 1000305}
+  - {fileID: 1000405}
+  - {fileID: 1000505}
+  - {fileID: 1000605}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
