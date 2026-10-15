@@ -1666,7 +1666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_text: "Acerto = <color=#00FF00>Verde</color>\nErro = <color=#FF0000>Vermelho</color>\nNota Atual = <color=#0088FF>Azul</color>\nPróxima Nota = <color=#AA55FF>Roxo</color>"
+  m_text: "Qual música você quer tocar?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1925,6 +1925,10 @@ MonoBehaviour:
   - {fileID: 1000405}
   - {fileID: 1000505}
   - {fileID: 1000605}
+  availableSongs:
+  - {fileID: 11400000, guid: 4bd526da46974427957d2b4d9445426e, type: 2}
+  - {fileID: 11400000, guid: 0b6a7e8f7fc04d25b998aa0f19c5b3cf, type: 2}
+  wallText: {fileID: 1100103}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
