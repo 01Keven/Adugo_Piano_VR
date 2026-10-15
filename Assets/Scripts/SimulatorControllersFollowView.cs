@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Casters;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
 // Keeps simulated controllers at fixed positions relative to the player's view.
 [DefaultExecutionOrder(10000)]
@@ -43,7 +46,50 @@ public class SimulatorControllersFollowView : MonoBehaviour
         right.SetParent(viewAnchor, false);
         leftController = left;
         rightController = right;
+        ConfigureStraightRays(left);
+        ConfigureStraightRays(right);
         FollowView();
+    }
+
+    private static void ConfigureStraightRays(Transform controller)
+    {
+        foreach (XRRayInteractor ray in controller.GetComponentsInChildren<XRRayInteractor>(true))
+        {
+            ray.lineType = XRRayInteractor.LineType.StraightLine;
+            ray.rayOriginTransform = controller;
+        }
+        foreach (CurveInteractionCaster caster in controller.GetComponentsInChildren<CurveInteractionCaster>(true))
+        {
+            caster.castOrigin = controller;
+            caster.enableStabilization = false;
+        }
+        foreach (XRInteractorLineVisual line in controller.GetComponentsInChildren<XRInteractorLineVisual>(true))
+        {
+            line.smoothMovement = false;
+            line.lineBendRatio = 1f;
+            line.overrideInteractorLineOrigin = true;
+            line.lineOriginTransform = controller;
+            line.snapEndpointIfAvailable = false;
+        }
+        foreach (CurveVisualController line in controller.GetComponentsInChildren<CurveVisualController>(true))
+        {
+            line.overrideLineOrigin = true;
+            line.lineOriginTransform = controller;
+            line.snapToSelectedAttachIfAvailable = false;
+            line.snapToSnapVolumeIfAvailable = false;
+            Straighten(line.noValidHitProperties);
+            Straighten(line.hoverHitProperties);
+            Straighten(line.selectHitProperties);
+            Straighten(line.uiHitProperties);
+            Straighten(line.uiPressHitProperties);
+        }
+    }
+
+    private static void Straighten(LineProperties properties)
+    {
+        if (properties == null) return;
+        properties.smoothlyCurveLine = false;
+        properties.lineBendRatio = 1f;
     }
 
     private void OnEnable()
@@ -66,12 +112,17 @@ public class SimulatorControllersFollowView : MonoBehaviour
         if (viewAnchor != null && playerCamera != null)
         {
             viewAnchor.SetPositionAndRotation(playerCamera.position, playerCamera.rotation);
-            // Tracking input can translate these transforms every frame (including WASD).
-            // Restore only their positions so simulated aiming and selection still work.
+            // Fix the simulated pose to the view so mouse/WASD cannot leave residual drift.
             if (leftController != null)
+            {
                 leftController.localPosition = leftOffset;
+                leftController.localRotation = Quaternion.identity;
+            }
             if (rightController != null)
+            {
                 rightController.localPosition = rightOffset;
+                rightController.localRotation = Quaternion.identity;
+            }
         }
     }
 }
