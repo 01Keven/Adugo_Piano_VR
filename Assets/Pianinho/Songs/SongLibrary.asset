@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cc64486682e8945907fcfc01e07da0, type: 3}
+  m_Name: SongLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Pianinho.SongLibrary
+  songs:
+  - {fileID: 11400000, guid: 676a466bd86387f47afa2c039b7fa0db, type: 2}
+  - {fileID: 11400000, guid: f9de933e08ee99c4d941c9a105575f5f, type: 2}
+  includeTestSong: 1
