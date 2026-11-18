@@ -3,17 +3,17 @@ using UnityEngine;
 namespace Playroom
 {
     /// <summary>
-    /// Faz um Rigidbody flutuar (balões): sem gravidade, sobe devagar até um teto macio e balança
-    /// de leve. Só aplica força quando não está na mão.
+    /// Simula um balão de gás hélio: empuxo contínuo para cima, desaceleração suave no teto,
+    /// turbulência de vento e auto-alinhamento vertical para balançar como pêndulo invertido.
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [AddComponentMenu("Playroom/Floating Body")]
     public class FloatingBody : MonoBehaviour
     {
-        [Header("Subida")]
+        [Header("Subida (Hélio)")]
         [Tooltip("Aceleração líquida para cima, em m/s².")]
-        [SerializeField, Min(0f)] float m_Lift = 0.6f;
+        [SerializeField, Min(0f)] float m_Lift = 2.5f;
 
         [Tooltip("Altura (mundo) do teto do salão.")]
         [SerializeField] float m_CeilingY = 3.2f;
@@ -21,36 +21,44 @@ namespace Playroom
         [Tooltip("Distância antes do teto em que a subida vai diminuindo.")]
         [SerializeField, Min(0.01f)] float m_SoftZone = 0.5f;
 
-        [Header("Balanço")]
-        [SerializeField, Min(0f)] float m_SwayAcceleration = 0.15f;
-        [SerializeField, Min(0f)] float m_SwayFrequency = 0.6f;
+        [Header("Vento e Balanço Orgânico")]
+        [Tooltip("Intensidade das rajadas laterais de ar.")]
+        [SerializeField, Min(0f)] float m_SwayAcceleration = 0.8f;
+
+        [Tooltip("Velocidade de variação do vento.")]
+        [SerializeField, Min(0f)] float m_SwayFrequency = 0.7f;
+
+        [Tooltip("Força que mantém o topo do balão apontado para cima enquanto balança.")]
+        [SerializeField, Min(0f)] float m_UprightTorque = 1.5f;
 
         Rigidbody m_Body;
-        GrabEvents m_Grab;
         float m_NoiseSeed;
 
         void Awake()
         {
             m_Body = GetComponent<Rigidbody>();
             m_Body.useGravity = false;
-            TryGetComponent(out m_Grab);
             m_NoiseSeed = Random.value * 100f;
         }
 
         void FixedUpdate()
         {
-            if (m_Grab != null && m_Grab.isHeld)
-                return;
-
+            // 1. Empuxo do hélio para cima (reduz suavemente perto do teto)
             var heightFactor = Mathf.Clamp01((m_CeilingY - m_Body.position.y) / m_SoftZone);
             var acceleration = Vector3.up * (m_Lift * heightFactor);
 
-            // Ruído suave, diferente para cada balão, para o movimento parecer orgânico.
+            // 2. Turbulência de ar em 3 eixos (Perlin Noise em camadas para não parecer robótico)
             var t = Time.time * m_SwayFrequency + m_NoiseSeed;
-            acceleration += new Vector3(Mathf.PerlinNoise(t, 0f) - 0.5f, 0f, Mathf.PerlinNoise(0f, t) - 0.5f)
-                            * (m_SwayAcceleration * 2f);
+            var windX = (Mathf.PerlinNoise(t, 0f) - 0.5f) + (Mathf.PerlinNoise(t * 2.3f, 5f) - 0.5f) * 0.4f;
+            var windZ = (Mathf.PerlinNoise(0f, t) - 0.5f) + (Mathf.PerlinNoise(5f, t * 2.3f) - 0.5f) * 0.4f;
+            var windY = (Mathf.PerlinNoise(t * 1.5f, t * 1.5f) - 0.5f) * 0.3f;
 
+            acceleration += new Vector3(windX, windY, windZ) * (m_SwayAcceleration * 2f);
             m_Body.AddForce(acceleration, ForceMode.Acceleration);
+
+            // 3. Torque suave para o nó do balão ficar para baixo e o topo para cima (pêndulo invertido)
+            var uprightAxis = Vector3.Cross(transform.up, Vector3.up);
+            m_Body.AddTorque(uprightAxis * m_UprightTorque, ForceMode.Acceleration);
         }
     }
 }
