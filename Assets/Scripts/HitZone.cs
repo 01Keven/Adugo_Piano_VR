@@ -6,8 +6,25 @@ public class HitZone : MonoBehaviour
     [Tooltip("Tecla a ser pressionada para acertar a nota")]
     public InputActionReference stepAction;
 
+    [Tooltip("Audio Source desta tecla, com o AudioClip da nota correspondente")]
+    [SerializeField] private AudioSource noteAudioSource;
+
     private bool canBePressed;
     private GameObject noteInZone;
+
+    private void Awake()
+    {
+        if (noteAudioSource == null)
+        {
+            noteAudioSource = GetComponent<AudioSource>();
+        }
+
+        if (noteAudioSource != null)
+        {
+            noteAudioSource.playOnAwake = false;
+            noteAudioSource.loop = false;
+        }
+    }
 
     private void OnEnable()
     {
@@ -32,10 +49,20 @@ public class HitZone : MonoBehaviour
     {
         if (canBePressed && noteInZone != null)
         {
+            if (noteAudioSource != null && noteAudioSource.clip != null)
+            {
+                noteAudioSource.PlayOneShot(noteAudioSource.clip);
+            }
+
             Debug.Log("Acertou a nota!");
             // Acertou a nota
-            Destroy(noteInZone);
+            NoteBehavior note = noteInZone.GetComponentInParent<NoteBehavior>();
+            if (note != null)
+            {
+                note.ChangeColorToGreen();
+            }
             canBePressed = false;
+            noteInZone = null;
         }
         else
         {
@@ -50,8 +77,21 @@ public class HitZone : MonoBehaviour
         {
             canBePressed = true;
             noteInZone = other.gameObject;
-            Debug.Log("deixou passar");
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == noteInZone)
+        {
+            NoteBehavior note = noteInZone.GetComponentInParent<NoteBehavior>();
+            if (note != null)
+            {
+                note.ChangeColorToRed();
+            }
+            Debug.Log("Deixou passar a nota!");
+            canBePressed = false;
+            noteInZone = null;
+        }
+    }
 }
