@@ -2,10 +2,7 @@ using UnityEngine;
 
 namespace Playroom
 {
-    /// <summary>
-    /// Toca um som de impacto 3D proporcional à velocidade da colisão, com variação de tom.
-    /// Funciona em qualquer objeto com Rigidbody (bola, bloco, pelúcia).
-    /// </summary>
+    
     [DisallowMultipleComponent]
     [RequireComponent(typeof(AudioSource))]
     [AddComponentMenu("Playroom/Impact Sound")]
@@ -13,14 +10,11 @@ namespace Playroom
     {
         [SerializeField] AudioClip[] m_Clips;
 
-        [Header("Velocidade do impacto (m/s)")]
         [SerializeField, Min(0f)] float m_MinSpeed = 0.8f;
         [SerializeField, Min(0.01f)] float m_MaxSpeed = 6f;
 
-        [Header("Variação")]
         [SerializeField] Vector2 m_PitchRange = new Vector2(0.92f, 1.08f);
 
-        [Tooltip("Tempo mínimo entre dois sons, para não virar metralhadora.")]
         [SerializeField, Min(0f)] float m_Cooldown = 0.08f;
 
         AudioSource m_Audio;

@@ -2,10 +2,7 @@ using UnityEngine;
 
 namespace Playroom
 {
-    /// <summary>
-    /// Opcional. Define como este objeto reage à água: 1 = flutua neutro, acima de 1 sobe até a
-    /// superfície, abaixo de 1 afunda. Sem este componente, o WaterVolume usa os valores padrão dele.
-    /// </summary>
+    
     [DisallowMultipleComponent]
     [AddComponentMenu("Playroom/Buoyant Body")]
     public class BuoyantBody : MonoBehaviour

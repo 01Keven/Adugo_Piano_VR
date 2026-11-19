@@ -2,22 +2,16 @@ using UnityEngine;
 
 namespace Playroom
 {
-    /// <summary>
-    /// Estabiliza o ragdoll da pelúcia. Fica no osso raiz (o do tronco), o mesmo que tem o
-    /// XR Grab Interactable. Ao segurar, aumenta o amortecimento dos membros para eles não
-    /// chicotearem; ao soltar, volta o balanço solto.
-    /// </summary>
+   
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [AddComponentMenu("Playroom/Plush Ragdoll")]
     public class PlushRagdoll : MonoBehaviour
     {
-        [Header("Estabilidade")]
         [SerializeField, Range(4, 30)] int m_SolverIterations = 12;
         [SerializeField, Range(1, 10)] int m_SolverVelocityIterations = 4;
         [SerializeField, Min(0.1f)] float m_MaxDepenetrationVelocity = 2f;
 
-        [Header("Amortecimento angular dos membros")]
         [SerializeField, Min(0f)] float m_RestingDamping = 1.5f;
         [SerializeField, Min(0f)] float m_HeldDamping = 4f;
 

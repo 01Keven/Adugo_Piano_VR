@@ -6,11 +6,7 @@ using UnityEngine.UI;
 
 namespace Pianinho.UI
 {
-    /// <summary>
-    /// Menu inicial dentro do VR, na ordem do GDD: nome do paciente → música, velocidade, modo e lado
-    /// (e opções extras) → ajuste do teclado → partida → resultado. Aceita laser e toque; durante a
-    /// partida só o toque funciona, então o botão Parar fica ao alcance da mão.
-    /// </summary>
+    
     public class MainMenu : MonoBehaviour
     {
         enum Page { Patient, Session, Calibration, Playing, Results }
@@ -20,16 +16,12 @@ namespace Pianinho.UI
         [SerializeField] RhythmGame m_Game;
         [SerializeField] SongLibrary m_Library;
 
-        [Tooltip("Salva o prontuário ao fim de cada partida. Vazio = procura na cena.")]
         [SerializeField] PatientRecordExporter m_Exporter;
 
-        [Tooltip("Prefab do campo de texto com teclado virtual (exemplo Spatial Keyboard do XRI).")]
         [SerializeField] GameObject m_NameFieldPrefab;
 
-        [Tooltip("Mostra a música de teste gerada em código. Desligado em builds de produção.")]
         [SerializeField] bool m_ShowTestSong = true;
 
-        [Header("Posição")]
         [SerializeField] float m_FrontDistance = 0.65f;
         [SerializeField] float m_FrontBelowHead = 0.12f;
         [SerializeField] float m_SideGap = 0.28f;
@@ -148,6 +140,17 @@ namespace Pianinho.UI
         }
 
         // ------------------------------------------------------------------ navegação
+
+        /// <summary>
+        /// Abre o menu na primeira página, na frente do jogador. Quem chama é a área do piano
+        /// (<see cref="PianoZone"/>), toda vez que o jogador entra nela.
+        /// </summary>
+        public void Open()
+        {
+            if (m_Canvas == null)
+                return;
+            Show(Page.Patient);
+        }
 
         void Show(Page page)
         {

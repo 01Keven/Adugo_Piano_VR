@@ -2,10 +2,7 @@ using UnityEngine;
 
 namespace Playroom
 {
-    /// <summary>
-    /// Configura um AudioSource para som 3D de verdade (caixa de som, rádio, caixa de música).
-    /// Um único lugar para ajustar distância, atenuação e espalhamento.
-    /// </summary>
+    
     [DisallowMultipleComponent]
     [RequireComponent(typeof(AudioSource))]
     [AddComponentMenu("Playroom/Spatial Audio Source")]

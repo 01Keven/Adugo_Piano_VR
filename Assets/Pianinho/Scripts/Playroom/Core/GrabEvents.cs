@@ -5,10 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace Playroom
 {
-    /// <summary>
-    /// Adaptador fino sobre o XR Grab Interactable. Os demais scripts do salão dependem só desta
-    /// classe para saber se o objeto está na mão, sem conhecer o XRI diretamente.
-    /// </summary>
+    
     [DisallowMultipleComponent]
     [RequireComponent(typeof(XRGrabInteractable))]
     public class GrabEvents : MonoBehaviour
@@ -17,10 +14,10 @@ namespace Playroom
 
         public bool isHeld => m_Interactable != null && m_Interactable.isSelected;
 
-        /// <summary>O objeto foi pego por uma mão ou controle.</summary>
+        /// O objeto foi pego por uma mao ou controle
         public event Action Grabbed;
 
-        /// <summary>O objeto foi solto.</summary>
+        /// solto
         public event Action Released;
 
         void Awake() => m_Interactable = GetComponent<XRGrabInteractable>();
